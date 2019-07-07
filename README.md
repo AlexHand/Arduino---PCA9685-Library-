@@ -2,12 +2,15 @@
 A I2C Library for the PCA9685 12bit 16-channel PWM IC. 
 
 There are many libraries available for this IC. Notably, there is even one by Adafruit. 
-Their library works well too, their demo code proves it, but like many other libraries
-onlines I have some personal nit picks with it. The biggest issue I have with the 
+Their library works well too, their demo code proves it, Like many other libraries
+onlines, though, I have some personal nit picks with it. The biggest issue I have with the 
 Adafruit library is the IC is referred to as a servo library. If you are using this IC
 for Servos, this is great! But, I wanted to use it solely as a PWM expansion modueles for 
-the already ill-equipped Arduino Uno boards. That being said, here are the functions 
-available to the user to operate this library. 
+the already ill-equipped Arduino Uno boards. I don't want a servo.write(val) command to 
+control the output on an IN-9 nixie tube. So I wrote a VERY simple user library to simply
+output a PWM to the pins of this IC. 
+
+That being said, here are the functions available to the user to operate this library. 
 
 
 PCA9685.begin() 
