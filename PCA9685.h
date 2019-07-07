@@ -21,7 +21,7 @@ class pca9685
   , default_device_signature_( DEFAULT_DEVICE_SIGNATURE )
   {
     #ifdef ESP8266
-    Wire.begin( sda_pin)_, scl_pin_ );
+    Wire.begin( sda_pin_, scl_pin_ );
     #endif
     Wire.begin();
   }
@@ -41,7 +41,11 @@ class pca9685
   // values ( mode 1 & mode 2 ) bit by bit. 
   //
   // Param[ in ]
-  // register_values should be entered as a byte in binary according to the data
+  // mode : is a integer range of 1 or 2, determining which mode register the user
+  // intends to write to. 
+  //
+  // Param[ in ]
+  // register_values : should be entered as a byte in binary according to the data
   // - sheet. In the event the parameters are exceeded for any reason, this 
   // function will return a " false " notifying the user of a failed write. 
   //
@@ -68,7 +72,7 @@ class pca9685
   // quite a bit faster than the Arduino's native frequency of 490hz-980hz.  
   // 
   // param[ in ]
-  // frequency is going to be a value that ranges up to 1600hz. Any value beyond
+  // frequency : is going to be a value that ranges up to 1600hz. Any value beyond
   // 1600hz will be rounded down to 1600hz. 
   // 
   // By default, this library assumes the user will want the maximum intended 
@@ -83,12 +87,12 @@ class pca9685
   // chip at a time, one byte at a time. 
   //
   // param [ in ] 
-  // device_addr will not have a default address, and must be written to have a
+  // device_addr : will not have a default address, and must be written to have a
   // successful read command. This parameter is the I2C signature of the device
   // the user intends to read from.
   //
   // param [ in ] 
-  // addr is the register the user intends to read from.
+  // addr : is the register the user intends to read from.
   // 
   uint8_t read( uint8_t device_addr, uint8_t addr );
   
@@ -98,18 +102,18 @@ class pca9685
   // An "analog" of Arduino's analogWrite to PCA9685's version. They will 
   // behave identically with the exception that a device signature is needed.
   // 
-  // Param[ in ]:
-  // device_signature is the I2C address needed to select which - if there are 
+  // Param[ in ]
+  // device_signature : is the I2C address needed to select which - if there are 
   // more than one - I2C device the user is referring to. The PCA9685 in 
   // particular can have an adjustable I2C address so this is especioially 
   // important to not leave as a default. 
   // 
   // Param[ in ]:
-  // output_pin is another I2C address that specifically refers to which PWM pin
+  // output_pin : is another I2C address that specifically refers to which PWM pin
   // the user is intending to write to. 
   // 
   // Param[ in ]:
-  // pwm_val is the actual analog value the user intends to output. 
+  // pwm_val : is the actual analog value the user intends to output. 
   //
   void analogWrite( uint8_t output_pin, uint16_t analog_val, uint8_t device_signatuture = DEFAULT_DEVICE_SIGNATURE);
 
@@ -121,6 +125,22 @@ class pca9685
   uint8_t OE_;
   uint8_t default_device_signature_;
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Purpose:
+  // This function is used as an inbetween from analogWrite to the PCA9685. The 
+  // PCA9685 has four registers that store high/low times. Rather than a range
+  // of values like 0-4095, these registers have to be written to in a specific
+  // way. This function takes care of this.   
+  // 
+  // Param[ in ]  
+  // output_pin : is an array location ( 0 - 15 ) which contains the register location
+  // of the output pin the user intends to write to. Any value above or below the 
+  // range of 0-15 will be clipped to 0-15 respectively. 
+  //
+  // Param[ in ]  
+  // on : 
+  // Param[ in ]  
+  // Param[ in ]  
   void PWM_parse(  uint8_t output_pin, uint16_t on, uint16_t off, uint8_t device_signature );
   
   //////////////////////////////////////////////////////////////////////////////
