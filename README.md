@@ -18,7 +18,7 @@ This loads default parameters, setting the I2C bus to 400khz, and register defau
 
 PCA9685.set_output_frequency( float )
 This function accepts any number, but will be clamped to either 1526hz, or 24hz. Those 
-numbers are hardeware limitations of the PCA9685 IC. 
+numbers are hardware limitations of the PCA9685 IC. 
 
 PCA9685.set_mode( uint8_t mode, uint8_t register_values )
 This function is for advanced users. The PCA9685 has quite a few built in functions that
