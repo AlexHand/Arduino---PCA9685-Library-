@@ -2,7 +2,7 @@
 A I2C Library for the PCA9685 12bit 16-channel PWM IC. 
 
 There are many libraries available for this IC. Notably, there is even one by Adafruit. 
-Their library works well too, their demo code proves it, Like many other libraries
+Their library works well too, their demo code proves it. Like many other libraries
 onlines, though, I have some personal nit picks with it. The biggest issue I have with the 
 Adafruit library is the IC is referred to as a servo library. If you are using this IC
 for Servos, this is great! But, I wanted to use it solely as a PWM expansion modueles for 
